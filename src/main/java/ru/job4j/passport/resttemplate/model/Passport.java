@@ -22,7 +22,7 @@ public class Passport {
     @NotNull
     private Integer series;
     @NotNull
-    private Long num;
+    private Long number;
     private LocalDate releaseDate;
     private LocalDate expireDate;
     private String firstname;
@@ -37,7 +37,7 @@ public class Passport {
         return "Passport{"
                 + "id=" + id
                 + ", series=" + series
-                + ", number=" + num
+                + ", number=" + number
                 + ", releaseDate=" + releaseDate
                 + ", firstname='" + firstname + '\''
                 + ", lastname='" + lastname + '\''
