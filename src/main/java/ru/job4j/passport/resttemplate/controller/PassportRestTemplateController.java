@@ -21,22 +21,22 @@ public class PassportRestTemplateController {
 
     private static final String API = "http://localhost:8080/passport/";
 
-    private final PassportService passports;
+    private final PassportService passportService;
 
     @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Passport>> find(@RequestParam(name = "series", required = false) String series) {
         List<Passport> passportList;
         if (series == null) {
-            passportList = passports.findAll();
+            passportList = passportService.findAll();
         } else {
-            passportList = passports.findBySeries(series);
+            passportList = passportService.findBySeries(series);
         }
         return new ResponseEntity<>(passportList, HttpStatus.OK);
     }
 
     @PostMapping("/save")
     public ResponseEntity<Passport> save(@RequestBody Passport passport) {
-        Passport rsl = passports.save(passport);
+        Passport rsl = passportService.save(passport);
         return new ResponseEntity<>(
                 rsl,
                 HttpStatus.CREATED
@@ -46,7 +46,7 @@ public class PassportRestTemplateController {
     @PutMapping("/update/{id}")
     public ResponseEntity<Void> update(@RequestBody Passport passport, @PathVariable String id) {
         try {
-            passports.update(passport, id);
+            passportService.update(passport, id);
             return new ResponseEntity<>(
                     HttpStatus.OK
             );
@@ -60,7 +60,7 @@ public class PassportRestTemplateController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
         try {
-            passports.delete(id);
+            passportService.delete(id);
             return new ResponseEntity<>(
                     HttpStatus.OK
             );
@@ -74,12 +74,12 @@ public class PassportRestTemplateController {
     @GetMapping("/unavailable")
     public ResponseEntity<List<Passport>> findExpiredPassports() {
 
-        return new ResponseEntity<>(passports.findUnavailable(), HttpStatus.OK);
+        return new ResponseEntity<>(passportService.findUnavailable(), HttpStatus.OK);
     }
 
     @GetMapping("/find-replaceable")
     public ResponseEntity<List<Passport>> findReplaceablePassports() {
-        return new ResponseEntity<>(passports.findReplaceable(), HttpStatus.OK);
+        return new ResponseEntity<>(passportService.findReplaceable(), HttpStatus.OK);
     }
 
 }
